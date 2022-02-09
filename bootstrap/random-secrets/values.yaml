@@ -1,0 +1,3 @@
+terraform:
+  image: hashicorp/terraform
+  tag: 1.1.4
