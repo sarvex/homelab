@@ -9,8 +9,8 @@ spec:
   template:
     metadata:
       name: terraform
-    restartPolicy: Never
     spec:
+      restartPolicy: Never
       containers:
         - name: terraform
           image: {{ .Values.terraform.image }}:{{ .Values.terraform.tag }}
