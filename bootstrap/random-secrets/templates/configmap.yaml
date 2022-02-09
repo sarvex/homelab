@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: terraform-source
+  namespace: {{ .Release.Namespace }}
 data:
   main.tf: |
 {{ (.Files.Glob "files/*").AsConfig | indent 2 }}
