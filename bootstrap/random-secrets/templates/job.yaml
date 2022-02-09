@@ -17,15 +17,30 @@ spec:
           env:
             - name: KUBE_NAMESPACE
               value: {{ .Release.Namespace }}
-          workingDir: /usr/local/src
+          workingDir: /usr/local/src/workspace
           command:
             - sh
             - -c
             - terraform init && terraform apply
           volumeMounts:
+            - name: workspace
+              mountPath: /usr/local/src
+      initContainers:
+        # Volume from configMap is read-only
+        - name: copy-source
+          image: alpine:3
+          command:
+            - sh
+            - -c
+            - cp -r /workspace /usr/local/src
+          volumeMounts:
             - name: terraform-source
+              mountPath: /workspace
+            - name: workspace
               mountPath: /usr/local/src
       volumes:
         - name: terraform-source
           configMap:
             name: terraform-source
+        - name: workspace
+          emptyDir: {}
