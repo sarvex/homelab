@@ -9,6 +9,7 @@ spec:
   template:
     metadata:
       name: terraform
+    restartPolicy: Never
     spec:
       containers:
         - name: terraform
