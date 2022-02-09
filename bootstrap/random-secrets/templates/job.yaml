@@ -1,0 +1,30 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/job/
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: terraform
+  namespace: {{ .Release.Namespace }}
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      name: terraform
+    spec:
+      containers:
+        - name: terraform
+          image: {{ .Values.terraform.image }}:{{ .Values.terraform.tag }}
+          env:
+            - name: KUBE_NAMESPACE
+              value: {{ .Release.Namespace }}
+          workingDir: /usr/local/src
+          command:
+            - sh
+            - -c
+            - terraform init && terraform apply
+          volumeMounts:
+            - name: terraform-source
+              mountPath: /usr/local/src
+      volumes:
+        - name: terraform-source
+          configMap:
+            name: terraform-source
