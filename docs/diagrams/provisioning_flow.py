@@ -12,7 +12,7 @@ graph_attr = {
 with Diagram("Provisioning flow", graph_attr=graph_attr, outformat="png", show=False):
     with Cluster("./metal"):
         pxe = Docker("PXE server")
-        os = LinuxGeneral(f"Rocky Linux")
+        os = LinuxGeneral("Rocky Linux")
         cluster = Node("K3s")
 
         pxe >> os >> cluster

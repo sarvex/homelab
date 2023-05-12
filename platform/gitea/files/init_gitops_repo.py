@@ -42,7 +42,7 @@ resp = requests.post(
 if resp.status_code == 201:
     print(f"Created organization {org}")
 elif resp.status_code == 422:
-    print(f"Organization already exists")
+    print("Organization already exists")
 else:
     print(f"Error creating organization {org} ({resp.status_code})")
     print(resp.content)
@@ -57,7 +57,7 @@ resp = requests.post(
 if resp.status_code == 201:
     print(f"Created repository {json.loads(str(resp.content, 'utf8'))['html_url']}")
 elif resp.status_code == 409:
-    print(f"Repository already exists")
+    print("Repository already exists")
 else:
     print(f"Error creating git repository ({resp.status_code})")
     print(resp.content)
